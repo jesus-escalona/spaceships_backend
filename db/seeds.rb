@@ -10,5 +10,8 @@ Ship.destroy_all
 Resource.destroy_all
 
 ship1 = Ship.create(name: "MegaShip", health: 1000, color: "white")
+ship2 = Ship.create(name: "Stars", health: 5000, color: "black")
+ship3 = Ship.create(name: "BOYYY", health: 2000, color: "blue")
+ship4 = Ship.create(name: "DOGESHIP", health: 1000000, color: "orange")
 gun = Resource.create(resource_type: "Gun", level: 1)
 relation = ShipResource.create(ship: ship1, resource: gun)
