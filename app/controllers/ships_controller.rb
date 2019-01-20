@@ -6,7 +6,7 @@ class ShipsController < ApplicationController
 	end
 
 	def create
-		byebug
+		# byebug
     ship = Ship.new(ship_params)
     if ship.save
       ActionCable.server.broadcast 'match_channel',
@@ -24,7 +24,7 @@ class ShipsController < ApplicationController
 	private
 
 	def ship_params
-		params.require(:ship).permit(:name, :color, :health)
+		params.permit(:name, :color, :health)
 	end
 
 end
