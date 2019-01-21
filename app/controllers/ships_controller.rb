@@ -7,6 +7,8 @@ class ShipsController < ApplicationController
 
 	def create
     ship = Ship.new(ship_params)
+		resource = Resource.find(1)
+		ship.resources << resource
     if ship.save
       ActionCable.server.broadcast 'match_channel',
                                     name: ship.name,
@@ -23,7 +25,7 @@ class ShipsController < ApplicationController
 	private
 
 	def ship_params
-		params.require(:ship).permit(:name, :color, :health)
+		params.require(:ship).permit(:name, :color)
 	end
 
 end
