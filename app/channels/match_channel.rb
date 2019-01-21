@@ -6,4 +6,10 @@ class MatchChannel < ApplicationCable::Channel
   def unsubscribed
     # Any cleanup needed when channel is unsubscribed
   end
+
+  def move
+   ActionCable.server.broadcast("match_channel",
+                                message: "moving")
+  end
+
 end
