@@ -1,11 +1,13 @@
 class ShipsController < ApplicationController
 	def index
 		@ships = Ship.all
-		render json: @ships
+		options = {include: [:resources]}
+		render json: ShipSerializer.new(@ships, options)
 	end
 
 	def show
 		@ship = Ship.find(params[:id])
-		render json: @ship
+		options = {include: [:resources]}
+		render json: ShipSerializer.new(@ship, options)
 	end
 end
