@@ -9,19 +9,27 @@ class ShipsController < ApplicationController
 	def create
     	@ship = Ship.new(ship_params)
 	    if @ship.save
-			@score = Score.new(ship: @ship)
-		    ActionCable.server.broadcast 'match_channel',
-		                                    name: @ship.name,
-		                                    color: @ship.color,
-											health: @ship.health
-			#options = {include: [:scores]}
-			render json: ShipSerializer.new(@ship)
+				@score = Score.new(ship: @ship)
+				#options = {include: [:scores]}
+				ActionCable.server.broadcast 'match',
+					name:@ship.name,
+					shipId: @ship.id,
+					color: @ship.color
+				render json: ShipSerializer.new(@ship)
 	    end
   	end
 
 	def show
 		@ship = Ship.find(params[:id])
 		render json: ShipSerializer.new(@ship)
+	end
+
+	def update
+		@ship = Ship.find(params[:id])
+		# if @ship.update.valid?
+		# 	MatchChannel.broadcast_to(@ship, )
+		# 	render json: ShipSerializer.new(@ship)
+		# end
 	end
 
 	private
