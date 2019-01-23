@@ -1,35 +1,33 @@
 class ShipsController < ApplicationController
 
-
 	def index
 		@ships = Ship.all
-		options = {include: [:resources]}
-		render json: ShipSerializer.new(@ships, options)
+		#options = {include: [:scores]}
+		render json: ShipSerializer.new(@ships)
 	end
 
 	def create
-    @ship = Ship.new(ship_params)
-		resource = Resource.find(1)
-		@ship.resources << resource
-    if @ship.save
-      ActionCable.server.broadcast 'match_channel',
-                                    name: @ship.name,
-                                    color: @ship.color,
-																		health: @ship.health
-			render json: @ship
-    end
-  end
+    	@ship = Ship.new(ship_params)
+	    if @ship.save
+			@score = Score.new(ship: @ship)
+		    ActionCable.server.broadcast 'match_channel',
+		                                    name: @ship.name,
+		                                    color: @ship.color,
+											health: @ship.health
+			#options = {include: [:scores]}
+			render json: ShipSerializer.new(@ship)
+	    end
+  	end
 
 	def show
 		@ship = Ship.find(params[:id])
-		options = {include: [:resources]}
-		render json: ShipSerializer.new(@ship, options)
+		render json: ShipSerializer.new(@ship)
 	end
 
 	private
 
 	def ship_params
-		params.require(:ship).permit(:name, :color)
+		params.require(:ship).permit(:email, :name, :color)
 	end
 
 end

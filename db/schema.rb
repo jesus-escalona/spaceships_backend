@@ -10,35 +10,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_21_023815) do
+ActiveRecord::Schema.define(version: 2019_01_23_144005) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "resources", force: :cascade do |t|
-    t.string "resource_type"
-    t.integer "level"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "ship_resources", force: :cascade do |t|
+  create_table "scores", force: :cascade do |t|
     t.bigint "ship_id"
-    t.bigint "resource_id"
+    t.integer "score", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["resource_id"], name: "index_ship_resources_on_resource_id"
-    t.index ["ship_id"], name: "index_ship_resources_on_ship_id"
+    t.index ["ship_id"], name: "index_scores_on_ship_id"
   end
 
   create_table "ships", force: :cascade do |t|
+    t.string "email"
     t.string "name"
     t.string "color"
     t.integer "health", default: 1000
+    t.integer "ship_size", default: 0
+    t.string "weapon", default: "gun"
+    t.integer "weapon_lvl", default: 1
+    t.boolean "status", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "ship_resources", "resources"
-  add_foreign_key "ship_resources", "ships"
+  add_foreign_key "scores", "ships"
 end
