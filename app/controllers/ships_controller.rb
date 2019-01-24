@@ -7,17 +7,22 @@ class ShipsController < ApplicationController
 	end
 
 	def create
-    	@ship = Ship.new(ship_params)
+		@found = Ship.find_by(email: ship_params[:email])
+		if (@found)
+			@found.update(status: true)
+			render json: ShipSerializer.new(@found)
+		else
+			@ship = Ship.new(ship_params)
+			@ship.x = rand(1..300)
+			@ship.y = rand(1..300)
 	    if @ship.save
 				@score = Score.new(ship: @ship)
 				#options = {include: [:scores]}
-				ActionCable.server.broadcast 'match',
-					name:@ship.name,
-					shipId: @ship.id,
-					color: @ship.color
 				render json: ShipSerializer.new(@ship)
 	    end
-  	end
+		end
+
+  end
 
 	def show
 		@ship = Ship.find(params[:id])

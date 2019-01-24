@@ -32,6 +32,9 @@ ActiveRecord::Schema.define(version: 2019_01_23_144005) do
     t.string "weapon", default: "gun"
     t.integer "weapon_lvl", default: 1
     t.boolean "status", default: true
+    t.integer "x"
+    t.integer "y"
+    t.float "angle"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
