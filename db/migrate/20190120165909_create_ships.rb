@@ -8,7 +8,7 @@ class CreateShips < ActiveRecord::Migration[5.2]
       	t.integer :ship_size, default: 0.1
       	t.string :weapon, default: "gun"
       	t.integer :weapon_lvl, default: 1
-      	t.boolean :status, default: false
+      	t.boolean :status, default: true
 
       t.timestamps
     end

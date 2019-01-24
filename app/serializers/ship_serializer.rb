@@ -1,5 +1,5 @@
 class ShipSerializer
 	include FastJsonapi::ObjectSerializer
-  	attributes :id, :name, :health, :color
-  	#has_many :scores, serializer: ScoreSerializer
+  attributes :id, :name, :health, :color, :status
+  #has_many :scores, serializer: ScoreSerializer
 end

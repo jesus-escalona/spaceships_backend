@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 2019_01_23_144005) do
     t.integer "ship_size", default: 0
     t.string "weapon", default: "gun"
     t.integer "weapon_lvl", default: 1
-    t.boolean "status", default: false
+    t.boolean "status", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
