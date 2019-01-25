@@ -8,21 +8,26 @@ class ShipsController < ApplicationController
 
 	def create
 		@found = Ship.find_by(email: ship_params[:email])
-		if (@found)
+		if @found
+			if (@found.status)
+			render json: {error: "You are already logged in"}
+			end
+
 			@found.update(status: true)
 			render json: ShipSerializer.new(@found)
+
 		else
 			@ship = Ship.new(ship_params)
 			@ship.x = rand(1..300)
 			@ship.y = rand(1..300)
-	    if @ship.save
+	    	if @ship.save
 				@score = Score.new(ship: @ship)
 				#options = {include: [:scores]}
 				render json: ShipSerializer.new(@ship)
-	    end
+	    	end
 		end
 
-  end
+  	end
 
 	def show
 		@ship = Ship.find(params[:id])
